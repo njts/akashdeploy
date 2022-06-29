@@ -8,3 +8,9 @@ RUN ssh-keygen -t rsa -f ~/.ssh/id_rsa -N ""
 ADD ssh/ssh /root/ssh.sh
 RUN chmod 755 /root/ssh.sh
 ENTRYPOINT ["/root/ssh.sh"]
+ENTRYPOINT /root/ssh.sh
+RUN apt-get update && \
+   apt-get install -y nginx && \
+   echo "daemon off;" >> /etc/nginx/nginx.conf
+ENTRYPOINT ["/init"]
+CMD ["ssh"]
